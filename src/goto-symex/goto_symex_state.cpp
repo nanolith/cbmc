@@ -595,7 +595,6 @@ void goto_symex_statet::rename_address(
       // type might not have been renamed in case of nesting of
       // structs and pointers/arrays
       if(
-        member_expr.struct_op().type().id() != ID_symbol_type &&
         member_expr.struct_op().type().id() != ID_struct_tag &&
         member_expr.struct_op().type().id() != ID_union_tag)
       {
@@ -680,12 +679,6 @@ void goto_symex_statet::rename(
   else if(type.id()==ID_pointer)
   {
     rename(to_pointer_type(type).subtype(), irep_idt(), ns, level);
-  }
-  else if(type.id() == ID_symbol_type)
-  {
-    const symbolt &symbol = ns.lookup(to_symbol_type(type));
-    type = symbol.type;
-    rename(type, l1_identifier, ns, level);
   }
   else if(type.id() == ID_union_tag)
   {
