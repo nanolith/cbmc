@@ -160,8 +160,6 @@ void cpp_typecheck_resolvet::remove_duplicates(
 
     if(old_id.id() == ID_symbol)
       id = to_symbol_expr(old_id).get_identifier();
-    else if(old_id.id() == ID_type && old_id.type().id() == ID_symbol_type)
-      id = to_symbol_type(old_id.type()).get_identifier();
     else if(old_id.id() == ID_type && old_id.type().id() == ID_struct_tag)
       id = to_struct_tag_type(old_id.type()).get_identifier();
     else if(old_id.id() == ID_type && old_id.type().id() == ID_union_tag)
