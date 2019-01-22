@@ -35,7 +35,9 @@ bool scratch_programt::check_sat(bool do_slice)
   output(ns, "scratch", std::cout);
 #endif
 
-  symex.symex_with_state(symex_state, functions, symex_symbol_table);
+  symex_state = util_make_unique<goto_symex_statet>(
+    symex_targett::sourcet(goto_functionst::entry_point(), *this));
+  symex.symex_with_state(*symex_state, functions, symex_symbol_table);
 
   if(do_slice)
   {
@@ -64,7 +66,7 @@ exprt scratch_programt::eval(const exprt &e)
 {
   exprt ssa=e;
 
-  symex_state.rename(ssa, ns);
+  symex_state->rename(ssa, ns);
 
   return checker->get(ssa);
 }
