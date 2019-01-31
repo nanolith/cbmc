@@ -17,12 +17,17 @@ bvt boolbvt::convert_replication(const replication_exprt &expr)
   if(width==0)
     return conversion_failed(expr);
 
-  mp_integer times = numeric_cast_v<mp_integer>(expr.times());
+  const auto &times = expr.times();
+
+  if(!times.is_constant())
+    return conversion_failed(expr);
+
+  mp_integer times_int = numeric_cast_v<mp_integer>(times);
 
   bvt bv;
   bv.resize(width);
 
-  const std::size_t u_times = numeric_cast_v<std::size_t>(times);
+  const std::size_t u_times = numeric_cast_v<std::size_t>(times_int);
   const bvt &op = convert_bv(expr.op());
 
   INVARIANT(
