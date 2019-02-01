@@ -32,9 +32,9 @@ exprt static_analysis_baset::get_guard(
   next++;
 
   if(next==to)
-    return boolean_negate(from->guard);
+    return boolean_negate(from->get_condition());
 
-  return from->guard;
+  return from->get_condition();
 }
 
 exprt static_analysis_baset::get_return_lhs(locationt to)
